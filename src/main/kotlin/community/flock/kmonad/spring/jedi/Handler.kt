@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 @Indexed
 @ResponseBody
 @RequestMapping("/jedi")
-class Controller(private val context: Context) {
+class Handler(private val context: Context) {
 
     @GetMapping
     suspend fun getJedi() = bindGet().go()

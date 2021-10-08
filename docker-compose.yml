@@ -1,13 +1,13 @@
 version: "3"
 services:
   mongodb:
-    image: mongo:bionic
+    image: mongo:5
     ports:
       - "27017:27017"
     restart: always
     container_name: kmonad-spring-mongodb
     volumes:
-      - "./db.init/:/docker-entrypoint-initdb.d/"
+      - "./db.init:/docker-entrypoint-initdb.d"
   service:
     build:
       context: .

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 @Indexed
 @ResponseBody
 @RequestMapping("/sith")
-class Controller(private val context: Context) {
+class Handler(private val context: Context) {
 
     @GetMapping
     suspend fun getSith() = context.bindGet()

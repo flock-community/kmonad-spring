@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test
 
 class JediTests {
 
-    private val controller: Controller = Controller(object : Context {
+    private val handler: Handler = Handler(object : Context {
         override val jediRepository: Repository = TestRepository
         override val logger: Logger = DefaultTestLogger
     })
 
     @Test
     fun testJedi() = runBlocking {
-        val name = controller.getJedi().first().name
+        val name = handler.getJedi().first().name
         assertEquals("Luke", name)
     }
 

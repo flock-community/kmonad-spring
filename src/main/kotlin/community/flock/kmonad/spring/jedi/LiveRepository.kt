@@ -12,7 +12,6 @@ import community.flock.kmonad.core.jedi.data.Jedi
 import community.flock.kmonad.core.jedi.pipe.Repository
 import community.flock.kmonad.spring.common.HasDatabaseClient
 import kotlinx.coroutines.flow.Flow
-import org.litote.kmongo.coroutine.CoroutineClient
 import org.litote.kmongo.eq
 import java.util.UUID
 

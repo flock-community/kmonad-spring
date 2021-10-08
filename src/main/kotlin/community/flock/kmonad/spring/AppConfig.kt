@@ -1,36 +1,42 @@
 package community.flock.kmonad.spring
 
 import community.flock.kmonad.core.common.define.Logger
-import community.flock.kmonad.core.sith.pipe.Repository
 import community.flock.kmonad.spring.common.LiveLayer
 import community.flock.kmonad.spring.common.LiveLogger
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.env.Environment
 import community.flock.kmonad.core.jedi.pipe.Context as JediContext
 import community.flock.kmonad.core.jedi.pipe.Repository as JediRepository
 import community.flock.kmonad.core.sith.pipe.Context as SithContext
-import community.flock.kmonad.spring.jedi.Controller as JediController
+import community.flock.kmonad.core.sith.pipe.Repository as SithRepository
+import community.flock.kmonad.core.wielders.pipe.Context as WielderContext
+import community.flock.kmonad.spring.jedi.Handler as JediHandler
 import community.flock.kmonad.spring.jedi.LiveRepository as LiveJediRepository
-import community.flock.kmonad.spring.sith.Controller as SithController
+import community.flock.kmonad.spring.sith.Handler as SithHandler
 import community.flock.kmonad.spring.sith.LiveRepository as LiveSithRepository
+import community.flock.kmonad.spring.wielders.Handler as WielderHandler
 
 @Configuration
-class AppConfig(env: Environment) {
-
-    private val host = env.getRequiredProperty("db.host")
-
-    private val liveLayer = LiveLayer(host)
+class AppConfig(private val liveLayer: LiveLayer) {
 
     @Bean
-    fun jediController(): JediController = JediController(object : JediContext {
+    fun jediHandler(): JediHandler = JediHandler(object : JediContext {
         override val jediRepository: JediRepository = LiveJediRepository(liveLayer)
         override val logger: Logger = LiveLogger
     })
 
     @Bean
-    fun sithController(): SithController = SithController(object : SithContext {
-        override val sithRepository: Repository = LiveSithRepository(liveLayer)
+    fun sithHandler(): SithHandler = SithHandler(object : SithContext {
+        override val sithRepository: SithRepository = LiveSithRepository(liveLayer)
+        override val logger: Logger = liveLayer.logger
+    })
+
+    @Bean
+    @ExperimentalCoroutinesApi
+    fun wielderHandler(): WielderHandler = WielderHandler(object : WielderContext {
+        override val jediRepository: JediRepository = LiveJediRepository(liveLayer)
+        override val sithRepository: SithRepository = LiveSithRepository(liveLayer)
         override val logger: Logger = liveLayer.logger
     })
 
