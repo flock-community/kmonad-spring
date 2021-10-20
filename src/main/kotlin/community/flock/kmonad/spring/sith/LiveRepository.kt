@@ -5,19 +5,19 @@ import com.mongodb.MongoException
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.common.define.DB
-import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.common.define.Has
 import community.flock.kmonad.core.sith.data.Sith
 import community.flock.kmonad.core.sith.pipe.Repository
-import community.flock.kmonad.spring.common.HasDatabaseClient
+import community.flock.kmonad.spring.common.DB.StarWars
+import community.flock.kmonad.spring.common.HasLive
 import org.litote.kmongo.eq
 import java.util.UUID
 
-interface LiveRepositoryContext : HasDatabaseClient, HasLogger
+interface LiveContext : HasLive.DatabaseClient, Has.Logger
 
-class LiveRepository(ctx: LiveRepositoryContext) : Repository {
+class LiveRepository(ctx: LiveContext) : Repository {
 
-    private val collection = ctx.databaseClient.getDatabase(DB.StarWars.name).getCollection<Sith>()
+    private val collection = ctx.databaseClient.getDatabase(StarWars.name).getCollection<Sith>()
 
     override suspend fun getAll() = guard { collection.find().toFlow() }
 
@@ -39,7 +39,7 @@ class LiveRepository(ctx: LiveRepositoryContext) : Repository {
 
 }
 
-private suspend fun <R> guard(block: suspend () -> R) = try {
+private inline fun <A> guard(block: () -> A) = try {
     block()
 } catch (e: DuplicateKeyException) {
     throw Conflict(null, e.cause)

@@ -6,11 +6,11 @@ import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
-import community.flock.kmonad.spring.jedi.LiveRepositoryContext as LiveJediRepositoryContext
-import community.flock.kmonad.spring.sith.LiveRepositoryContext as LiveSithRepositoryContext
+import community.flock.kmonad.spring.jedi.LiveContext as LiveJediContext
+import community.flock.kmonad.spring.sith.LiveContext as LiveSithContext
 
 @Configuration
-class LiveLayer(env: Environment) : LiveJediRepositoryContext, LiveSithRepositoryContext {
+class LiveLayer(env: Environment) : LiveJediContext, LiveSithContext {
 
     private val host = env.getRequiredProperty("db.host")
     private val port = env.getProperty("db.port") ?: 27017

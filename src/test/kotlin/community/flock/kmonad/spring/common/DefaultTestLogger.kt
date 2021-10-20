@@ -1,20 +1,20 @@
 package community.flock.kmonad.spring.common
 
-import com.mongodb.assertions.Assertions
 import community.flock.kmonad.core.common.define.Logger
+import org.junit.jupiter.api.Assertions
 
 object DefaultTestLogger : Logger {
 
-    override fun log(s: String) {
-        Assertions.assertTrue(s.isNotBlank())
+    override fun log(string: String) {
+        Assertions.assertTrue(string.isNotBlank())
     }
 
-    override fun error(s: String) {
-        Assertions.assertTrue(s.isNotBlank())
+    override fun error(string: String) {
+        Assertions.assertTrue(string.isNotBlank())
     }
 
-    override fun warn(s: String) {
-        Assertions.assertTrue(s.isNotBlank())
+    override fun warn(string: String) {
+        Assertions.assertTrue(string.isNotBlank())
     }
 
 }
