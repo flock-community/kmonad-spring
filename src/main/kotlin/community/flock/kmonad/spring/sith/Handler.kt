@@ -1,10 +1,12 @@
 package community.flock.kmonad.spring.sith
 
+import community.flock.kmonad.core.sith.data.Sith
+import community.flock.kmonad.core.sith.pipe.Context
 import community.flock.kmonad.core.sith.pipe.bindDelete
 import community.flock.kmonad.core.sith.pipe.bindGet
 import community.flock.kmonad.core.sith.pipe.bindPost
-import community.flock.kmonad.core.sith.data.Sith
-import community.flock.kmonad.core.sith.pipe.Context
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Indexed
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,15 +22,15 @@ import org.springframework.web.bind.annotation.ResponseBody
 class Handler(private val context: Context) {
 
     @GetMapping
-    suspend fun getSith() = context.bindGet()
+    fun getSith() = runBlocking { context.bindGet().toList() }
 
     @GetMapping("{uuid}")
-    suspend fun getSithByUUID(@PathVariable uuid: String) = context.bindGet(uuid)
+    fun getSithByUUID(@PathVariable uuid: String) = runBlocking { context.bindGet(uuid) }
 
     @PostMapping
-    suspend fun postSith(@RequestBody sith: Sith) = context.bindPost(sith)
+    fun postSith(@RequestBody sith: Sith) = runBlocking { context.bindPost(sith) }
 
     @DeleteMapping("{uuid}")
-    suspend fun deleteSith(@PathVariable uuid: String) = context.bindDelete(uuid)
+    fun deleteSith(@PathVariable uuid: String) = runBlocking { context.bindDelete(uuid) }
 
 }

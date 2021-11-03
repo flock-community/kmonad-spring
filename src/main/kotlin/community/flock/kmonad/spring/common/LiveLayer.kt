@@ -12,8 +12,8 @@ import community.flock.kmonad.spring.sith.LiveContext as LiveSithContext
 @Configuration
 class LiveLayer(env: Environment) : LiveJediContext, LiveSithContext {
 
-    private val host = env.getRequiredProperty("db.host")
-    private val port = env.getProperty("db.port") ?: 27017
+    private val host = env.getRequiredProperty("spring.data.mongodb.host")
+    private val port = env.getProperty("spring.data.mongodb.port") ?: 27017
 
     override val databaseClient = KMongo.createClient(ConnectionString("mongodb://$host:$port")).coroutine
     override val logger: Logger = LiveLogger

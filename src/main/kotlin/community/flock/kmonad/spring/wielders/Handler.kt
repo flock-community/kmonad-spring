@@ -1,8 +1,11 @@
 package community.flock.kmonad.spring.wielders
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import community.flock.kmonad.core.wielders.pipe.Context
 import community.flock.kmonad.core.wielders.pipe.bindGet
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Indexed
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -16,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody
 class Handler(private val context: Context) {
 
     @GetMapping
-    suspend fun getWielders() = context.bindGet()
+    fun getWielders() = runBlocking { context.bindGet().toList().map { jacksonObjectMapper().writeValueAsString(it) } }
 
     @GetMapping("{uuid}")
-    suspend fun getWielderByUUID(@PathVariable uuid: String) = context.bindGet(uuid)
+    fun getWielderByUUID(@PathVariable uuid: String) = runBlocking { context.bindGet(uuid) }
 
 }
