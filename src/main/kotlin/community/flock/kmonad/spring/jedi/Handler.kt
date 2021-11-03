@@ -25,18 +25,19 @@ import org.springframework.web.bind.annotation.ResponseBody
 class Handler(private val context: Context) {
 
     @GetMapping
-    fun getJedi() = bindGet().go()
+    fun getJedi() = handle { bindGet() }
 
     @GetMapping("{uuid}")
-    fun getJediByUUID(@PathVariable uuid: String) = bindGet(uuid).go()
+    fun getJediByUUID(@PathVariable uuid: String) = handle { bindGet(uuid) }
 
     @PostMapping
-    fun postJedi(@RequestBody jedi: Jedi) = bindPost(jedi).go()
+    fun postJedi(@RequestBody jedi: Jedi) = handle { bindPost(jedi) }
 
     @DeleteMapping("{uuid}")
-    fun deleteJedi(@PathVariable uuid: String) = bindDelete(uuid).go()
+    fun deleteJedi(@PathVariable uuid: String) = handle { bindDelete(uuid) }
 
-    private fun <A> Reader<Context, IO<Either<AppException, A>>>.go() =
-        provide(context).runUnsafe().getOrHandle { throw it }
+
+    private fun <A> handle(block: () -> Reader<Context, IO<Either<AppException, A>>>) =
+        block().provide(context).runUnsafe().getOrHandle { throw it }
 
 }

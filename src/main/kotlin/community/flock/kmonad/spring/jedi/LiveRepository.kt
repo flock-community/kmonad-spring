@@ -51,13 +51,12 @@ class LiveRepository(ctx: LiveContext) : Repository {
         }
     }
 
-    private fun deleteByUUIDAsEither(uuid: UUID): Either<AppException, Jedi> =
-        either {
-            val jedi = getByUUIDAsEither(uuid).bind()
-            val result = guard { collection.deleteOne(Jedi::id eq uuid.toString()) }.bind()
-            val maybeJedi = jedi.takeIf { result.wasAcknowledged() }
-            maybeJedi ?: InternalServerError().left().bind()
-        }
+    private fun deleteByUUIDAsEither(uuid: UUID): Either<AppException, Jedi> = either {
+        val jedi = getByUUIDAsEither(uuid).bind()
+        val result = guard { collection.deleteOne(Jedi::id eq uuid.toString()) }.bind()
+        val maybeJedi = jedi.takeIf { result.wasAcknowledged() }
+        maybeJedi ?: InternalServerError().left().bind()
+    }
 
 }
 

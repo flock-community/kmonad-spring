@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody
 class Handler(private val context: Context) {
 
     @GetMapping
-    fun getWielders() = runBlocking { context.bindGet().toList().map { jacksonObjectMapper().writeValueAsString(it) } }
+    fun getWielders() = handle { context.bindGet().toList() }.map { jacksonObjectMapper().writeValueAsString(it) }
 
     @GetMapping("{uuid}")
-    fun getWielderByUUID(@PathVariable uuid: String) = runBlocking { context.bindGet(uuid) }
+    fun getWielderByUUID(@PathVariable uuid: String) = handle { context.bindGet(uuid) }
+
+
+    private fun <A> handle(block: suspend () -> A) = runBlocking { block() }
 
 }

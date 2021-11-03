@@ -17,5 +17,5 @@ services:
       - mongodb
     container_name: kmonad-spring-service
     environment:
-      - "DB_HOST=mongodb"
-      - "DB_PORT=27017"
+      - "SPRING_DATA_MONGODB_HOST=mongodb"
+      - "SPRING_DATA_MONGODB_PORT=27017"

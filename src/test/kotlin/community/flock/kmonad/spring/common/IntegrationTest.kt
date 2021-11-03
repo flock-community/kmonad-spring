@@ -2,6 +2,7 @@ package community.flock.kmonad.spring.common
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import community.flock.kmonad.core.common.define.Data
+import community.flock.kmonad.core.droids.data.Droid
 import community.flock.kmonad.core.jedi.data.Jedi
 import community.flock.kmonad.core.sith.data.Sith
 import org.hamcrest.CoreMatchers.containsString
@@ -12,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActionsDsl
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
@@ -27,22 +27,18 @@ class IntegrationTest {
     lateinit var mockMvc: MockMvc
 
     @Test
-    fun testJediHandler() {
-        testCrud(
-            "/jedi",
-            Jedi(name = "Mace Windu", age = 54),
-            Jedi(name = "Rey", age = 21)
-        )
-    }
+    fun testJediHandler() = testCrud(
+        "/jedi",
+        Jedi(name = "Mace Windu", age = 54),
+        Jedi(name = "Rey", age = 21)
+    )
 
     @Test
-    fun testSithHandler() {
-        testCrud(
-            "/sith",
-            Sith(name = "Darth Plagueis", age = 123),
-            Sith(name = "Darth Sidious", age = 234)
-        )
-    }
+    fun testSithHandler() = testCrud(
+        "/sith",
+        Sith(name = "Darth Plagueis", age = 123),
+        Sith(name = "Darth Sidious", age = 234)
+    )
 
     @Test
     fun testWieldersHandler() {
@@ -78,7 +74,15 @@ class IntegrationTest {
         }
     }
 
-    private fun testCrud(resource: String, item1: Data, item2: Data): ResultActionsDsl {
+    @Test
+    fun testDroidHandler() = testCrud(
+        "/droids",
+        Droid(designation = "4-LOM", type = Droid.Type.Protocol),
+        Droid(designation = "R5-D4", type = Droid.Type.Astromech)
+    )
+
+
+    private fun testCrud(resource: String, item1: Data, item2: Data) {
         mockMvc.post(resource) {
             contentType = MediaType.APPLICATION_JSON
             content = item1.toJSON()
@@ -121,7 +125,7 @@ class IntegrationTest {
             content { json(item2.toJSON()) }
         }
 
-        return mockMvc.delete("$resource/${item2.id}").andExpect {
+        mockMvc.delete("$resource/${item2.id}").andExpect {
             status { isNotFound() }
         }
     }
