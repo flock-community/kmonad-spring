@@ -2,7 +2,6 @@ package community.flock.kmonad.spring
 
 import community.flock.kmonad.core.common.define.Logger
 import community.flock.kmonad.spring.common.LiveLayer
-import community.flock.kmonad.spring.common.LiveLogger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -27,7 +26,7 @@ class AppConfig(private val liveLayer: LiveLayer) {
     @Bean
     fun jediHandler(): JediHandler = JediHandler(object : JediContext {
         override val jediRepository: JediRepository = LiveJediRepository(liveLayer)
-        override val logger: Logger = LiveLogger
+        override val logger: Logger = liveLayer.logger
     })
 
     @Bean

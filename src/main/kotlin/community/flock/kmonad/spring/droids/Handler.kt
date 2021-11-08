@@ -24,19 +24,19 @@ import org.springframework.web.bind.annotation.ResponseBody
 class Handler(private val context: Context) {
 
     @GetMapping
-    fun getDroids() = handle { context.bindGet() }
+    fun getDroids() = handle { bindGet() }
 
     @GetMapping("{uuid}")
-    fun getDroidByUUID(@PathVariable uuid: String) = handle { context.bindGet(uuid) }
+    fun getDroidByUUID(@PathVariable uuid: String) = handle { bindGet(uuid) }
 
     @PostMapping
-    fun postDroid(@RequestBody droid: Droid) = handle { context.bindPost(droid) }
+    fun postDroid(@RequestBody droid: Droid) = handle { bindPost(droid) }
 
     @DeleteMapping("{uuid}")
-    fun deleteJedi(@PathVariable uuid: String) = handle { context.bindDelete(uuid) }
+    fun deleteJedi(@PathVariable uuid: String) = handle { bindDelete(uuid) }
 
 
-    private fun <A> handle(block: suspend () -> Either<AppException, A>) =
-        runBlocking { block().getOrHandle { throw it } }
+    private fun <A> handle(block: suspend Context.() -> Either<AppException, A>) =
+        runBlocking { context.block().getOrHandle { throw it } }
 
 }
