@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>community.flock</groupId>
+        <artifactId>kmonad-spring</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kmonad-spring-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>kmonad-spring-api</name>
+    <description>API definition of KMonad spring service</description>
+
+    <properties>
+        <immutables-value.version>2.8.8</immutables-value.version>
+        <swagger-maven-plugin.version>2.1.6</swagger-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+            <version>${immutables-value.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.openapitools.swagger</groupId>
+            <artifactId>swagger-maven-plugin</artifactId>
+            <version>${swagger-maven-plugin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.openapitools.swagger</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <configuration>
+                    <resourcePackages>
+                        <resourcePackage>community.flock.kmonad.spring.api</resourcePackage>
+                    </resourcePackages>
+                    <outputDirectory>${basedir}/target/swagger</outputDirectory>
+                    <outputFilename>swagger</outputFilename>
+                    <outputFormats>JSON,YAML</outputFormats>
+                    <prettyPrint>true</prettyPrint>
+                    <attachSwaggerArtifact>true</attachSwaggerArtifact>
+                    <swaggerConfig>
+                        <info>
+                            <title>KMonad Spring API</title>
+                            <version>0.0.1-SNAPSHOT</version>
+                        </info>
+                    </swaggerConfig>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
