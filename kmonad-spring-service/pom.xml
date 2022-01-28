@@ -13,18 +13,18 @@
     <name>kmonad-spring-service</name>
     <description>Implementation of KMonad spring api</description>
 
-    <properties>
-        <java.version>11</java.version>
-        <kotlin.version>1.6.0</kotlin.version>
-        <kmongo.version>4.3.0</kmongo.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>community.flock</groupId>
             <artifactId>kmonad-spring-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>community.flock</groupId>
+            <artifactId>kmonad-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -62,12 +62,6 @@
             <groupId>org.litote.kmongo</groupId>
             <artifactId>kmongo-coroutine</artifactId>
             <version>${kmongo.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>community.flock</groupId>
-            <artifactId>kmonad-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>

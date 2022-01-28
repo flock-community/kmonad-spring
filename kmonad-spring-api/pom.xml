@@ -51,7 +51,7 @@
                     <swaggerConfig>
                         <info>
                             <title>KMonad Spring API</title>
-                            <version>0.0.1-SNAPSHOT</version>
+                            <version>${project.version}</version>
                         </info>
                     </swaggerConfig>
                 </configuration>
