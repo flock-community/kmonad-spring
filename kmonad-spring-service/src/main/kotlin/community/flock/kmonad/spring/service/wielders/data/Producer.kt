@@ -1,8 +1,8 @@
 package community.flock.kmonad.spring.service.wielders.data
 
-import community.flock.kmonad.core.wielders.data.ForceWielder
-import community.flock.kmonad.core.wielders.data.ForceWielder.Type.DARK
-import community.flock.kmonad.core.wielders.data.ForceWielder.Type.LIGHT
+import community.flock.kmonad.core.wielders.model.ForceWielder
+import community.flock.kmonad.core.wielders.model.ForceWielder.Type.DARK
+import community.flock.kmonad.core.wielders.model.ForceWielder.Type.LIGHT
 import community.flock.kmonad.spring.api.data.ImmutableForceWielder
 import community.flock.kmonad.spring.api.data.ForceWielder as ProducedForceWielder
 

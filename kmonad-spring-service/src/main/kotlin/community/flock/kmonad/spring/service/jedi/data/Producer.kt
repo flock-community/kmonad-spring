@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.jedi.data
 
-import community.flock.kmonad.core.jedi.data.Jedi
+import community.flock.kmonad.core.jedi.model.Jedi
 import community.flock.kmonad.spring.api.data.ImmutableJedi
 import community.flock.kmonad.spring.api.data.Jedi as ProducedJedi
 

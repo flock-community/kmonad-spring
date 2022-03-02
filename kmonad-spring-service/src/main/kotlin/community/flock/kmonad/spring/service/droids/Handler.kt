@@ -3,10 +3,10 @@ package community.flock.kmonad.spring.service.droids
 import arrow.core.Either
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
-import community.flock.kmonad.core.droids.pipe.Context
-import community.flock.kmonad.core.droids.pipe.bindDelete
-import community.flock.kmonad.core.droids.pipe.bindGet
-import community.flock.kmonad.core.droids.pipe.bindPost
+import community.flock.kmonad.core.droids.Context
+import community.flock.kmonad.core.droids.bindDelete
+import community.flock.kmonad.core.droids.bindGet
+import community.flock.kmonad.core.droids.bindPost
 import community.flock.kmonad.spring.api.DroidApi
 import community.flock.kmonad.spring.service.droids.data.consume
 import community.flock.kmonad.spring.service.droids.data.produce

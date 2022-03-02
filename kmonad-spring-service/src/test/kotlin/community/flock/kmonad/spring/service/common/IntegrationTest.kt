@@ -1,8 +1,8 @@
 package community.flock.kmonad.spring.service.common
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import community.flock.kmonad.core.jedi.data.Jedi
-import community.flock.kmonad.core.sith.data.Sith
+import community.flock.kmonad.core.jedi.model.Jedi
+import community.flock.kmonad.core.sith.model.Sith
 import community.flock.kmonad.spring.api.data.Data
 import community.flock.kmonad.spring.api.data.Droid.Type.ASTROMECH
 import community.flock.kmonad.spring.api.data.Droid.Type.PROTOCOL

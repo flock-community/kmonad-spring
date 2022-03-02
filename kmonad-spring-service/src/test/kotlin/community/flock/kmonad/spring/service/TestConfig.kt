@@ -4,9 +4,9 @@ import community.flock.kmonad.spring.service.common.IntegrationTestLayer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import community.flock.kmonad.core.jedi.pipe.Context as JediContext
-import community.flock.kmonad.core.sith.pipe.Context as SithContext
-import community.flock.kmonad.core.wielders.pipe.Context as WieldersContext
+import community.flock.kmonad.core.jedi.Context as JediContext
+import community.flock.kmonad.core.sith.Context as SithContext
+import community.flock.kmonad.core.wielders.Context as WieldersContext
 import community.flock.kmonad.spring.service.jedi.Handler as JediHandler
 import community.flock.kmonad.spring.service.jedi.LiveRepository as LiveJediRepository
 import community.flock.kmonad.spring.service.sith.Handler as SithHandler

@@ -1,7 +1,7 @@
 package community.flock.kmonad.spring.service.wielders
 
-import community.flock.kmonad.core.wielders.pipe.Context
-import community.flock.kmonad.core.wielders.pipe.bindGet
+import community.flock.kmonad.core.wielders.Context
+import community.flock.kmonad.core.wielders.bindGet
 import community.flock.kmonad.spring.api.ForceWielderApi
 import community.flock.kmonad.spring.service.wielders.data.produce
 import kotlinx.coroutines.ExperimentalCoroutinesApi

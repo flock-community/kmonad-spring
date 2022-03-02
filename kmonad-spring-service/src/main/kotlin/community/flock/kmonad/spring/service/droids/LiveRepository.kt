@@ -5,8 +5,8 @@ import arrow.core.computations.either
 import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException
-import community.flock.kmonad.core.droids.data.Droid
-import community.flock.kmonad.core.droids.pipe.Repository
+import community.flock.kmonad.core.droids.model.Droid
+import community.flock.kmonad.core.droids.Repository
 import community.flock.kmonad.spring.service.common.DB
 import community.flock.kmonad.spring.service.common.HasLive
 import kotlinx.coroutines.flow.Flow

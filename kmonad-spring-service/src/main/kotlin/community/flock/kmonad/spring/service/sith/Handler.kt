@@ -1,9 +1,11 @@
 package community.flock.kmonad.spring.service.sith
 
-import community.flock.kmonad.core.sith.pipe.Context
-import community.flock.kmonad.core.sith.pipe.bindDelete
-import community.flock.kmonad.core.sith.pipe.bindGet
-import community.flock.kmonad.core.sith.pipe.bindPost
+import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.sith.Context
+import community.flock.kmonad.core.sith.deleteByUUID
+import community.flock.kmonad.core.sith.getAll
+import community.flock.kmonad.core.sith.getByUUID
+import community.flock.kmonad.core.sith.save
 import community.flock.kmonad.spring.api.SithApi
 import community.flock.kmonad.spring.service.sith.data.consume
 import community.flock.kmonad.spring.service.sith.data.produce
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
+import java.util.UUID
 import community.flock.kmonad.spring.api.data.Sith as PotentialSith
 
 @Indexed
@@ -25,18 +28,27 @@ import community.flock.kmonad.spring.api.data.Sith as PotentialSith
 class Handler(private val context: Context) : SithApi {
 
     @GetMapping
-    override fun getSith() = handle { bindGet().toList() }.produce()
+    override fun getSith() = handle { getAll().toList() }.produce()
 
     @GetMapping("{uuid}")
-    override fun getSithByUUID(@PathVariable uuid: String) = handle { bindGet(uuid) }.produce()
+    override fun getSithByUUID(@PathVariable uuid: String) = validate { UUID.fromString(uuid) }
+        .handle { getByUUID(it) }.produce()
+
 
     @PostMapping
-    override fun postSith(@RequestBody sith: PotentialSith) = handle { bindPost(sith.consume()) }.produce()
+    override fun postSith(@RequestBody sith: PotentialSith) = handle { save(sith.consume()) }.produce()
 
     @DeleteMapping("{uuid}")
-    override fun deleteSithByUUID(@PathVariable uuid: String) = handle { bindDelete(uuid) }.produce()
+    override fun deleteSithByUUID(@PathVariable uuid: String) = validate { UUID.fromString(uuid) }
+        .handle { deleteByUUID(it) }.produce()
 
 
-    private fun <A> handle(block: suspend Context.() -> A) = runBlocking { context.block() }
+    private fun <R, A> R.handle(block: suspend Context.(R) -> A) = let { runBlocking { context.block(it) } }
+
+    private fun <A> validate(block: () -> A) = try {
+        block()
+    } catch (e: Exception) {
+        throw AppException.BadRequest()
+    }
 
 }

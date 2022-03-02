@@ -1,8 +1,8 @@
 package community.flock.kmonad.spring.service.droids.data
 
-import community.flock.kmonad.core.droids.data.Droid
-import community.flock.kmonad.core.droids.data.Droid.Type.Astromech
-import community.flock.kmonad.core.droids.data.Droid.Type.Protocol
+import community.flock.kmonad.core.droids.model.Droid
+import community.flock.kmonad.core.droids.model.Droid.Type.Astromech
+import community.flock.kmonad.core.droids.model.Droid.Type.Protocol
 import community.flock.kmonad.spring.api.data.ImmutableDroid
 import community.flock.kmonad.spring.api.data.Droid as ProducedDroid
 

@@ -5,10 +5,10 @@ import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.common.IO
 import community.flock.kmonad.core.common.Reader
-import community.flock.kmonad.core.jedi.pipe.Context
-import community.flock.kmonad.core.jedi.pipe.bindDelete
-import community.flock.kmonad.core.jedi.pipe.bindGet
-import community.flock.kmonad.core.jedi.pipe.bindPost
+import community.flock.kmonad.core.jedi.Context
+import community.flock.kmonad.core.jedi.bindDelete
+import community.flock.kmonad.core.jedi.bindGet
+import community.flock.kmonad.core.jedi.bindPost
 import community.flock.kmonad.spring.api.JediApi
 import community.flock.kmonad.spring.service.jedi.data.consume
 import community.flock.kmonad.spring.service.jedi.data.produce
