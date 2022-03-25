@@ -27,7 +27,7 @@ import community.flock.kmonad.spring.api.data.Jedi as PotentialJedi
 @Indexed
 @ResponseBody
 @RequestMapping("/jedi")
-class Handler(private val context: Context) : JediApi {
+class Controller(private val context: Context) : JediApi {
 
     @GetMapping
     override fun getJedi() = handle { bindGet() }.let { runBlocking { it.toList() } }.produce()

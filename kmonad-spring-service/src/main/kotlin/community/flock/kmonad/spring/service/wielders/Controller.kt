@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 @ResponseBody
 @ExperimentalCoroutinesApi
 @RequestMapping("/force-wielders")
-class Handler(private val context: Context) : ForceWielderApi {
+class Controller(private val context: Context) : ForceWielderApi {
 
     @GetMapping
     override fun getWielders() = handle { bindGet().toList() }.produce()

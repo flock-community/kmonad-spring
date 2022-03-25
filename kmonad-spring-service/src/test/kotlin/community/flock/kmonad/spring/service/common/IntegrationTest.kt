@@ -30,21 +30,21 @@ class IntegrationTest {
     lateinit var mockMvc: MockMvc
 
     @Test
-    fun testJediHandler() = testCrud(
+    fun testJediController() = testCrud(
         "/jedi",
         ImmutableJedi.builder().id(UUID.randomUUID().toString()).name("Mace Windu").age(54).build(),
         ImmutableJedi.builder().id(UUID.randomUUID().toString()).name("Rey").age(21).build()
     )
 
     @Test
-    fun testSithHandler() = testCrud(
+    fun testSithController() = testCrud(
         "/sith",
         ImmutableSith.builder().id(UUID.randomUUID().toString()).name("Darth Plagueis").age(123).build(),
         ImmutableSith.builder().id(UUID.randomUUID().toString()).name("Darth Sidious").age(234).build(),
     )
 
     @Test
-    fun testWieldersHandler() {
+    fun testWieldersController() {
         val jedi = Jedi(name = "Mace Windu", age = 54)
         val sith = Sith(name = "Darth Plagueis", age = 123)
 
@@ -78,7 +78,7 @@ class IntegrationTest {
     }
 
     @Test
-    fun testDroidHandler() = testCrud(
+    fun testDroidController() = testCrud(
         "/droids",
         ImmutableDroid.builder().id(UUID.randomUUID().toString()).designation("4-LOM").type(PROTOCOL).build(),
         ImmutableDroid.builder().id(UUID.randomUUID().toString()).designation("R5-D4").type(ASTROMECH).build(),

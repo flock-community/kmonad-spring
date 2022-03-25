@@ -25,7 +25,7 @@ import community.flock.kmonad.spring.api.data.Droid as PotentialDroid
 @Indexed
 @ResponseBody
 @RequestMapping("/droids")
-class Handler(private val context: Context) : DroidApi {
+class Controller(private val context: Context) : DroidApi {
 
     @GetMapping
     override fun getDroids() = handle { bindGet().map { it.toList() } }.produce()

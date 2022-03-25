@@ -25,7 +25,7 @@ import community.flock.kmonad.spring.api.data.Sith as PotentialSith
 @Indexed
 @ResponseBody
 @RequestMapping("/sith")
-class Handler(private val context: Context) : SithApi {
+class Controller(private val context: Context) : SithApi {
 
     @GetMapping
     override fun getSith() = handle { getAll().toList() }.produce()
