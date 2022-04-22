@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.droids
 
-import arrow.core.Either
+import arrow.core.continuations.Effect
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.common.Producible
@@ -41,7 +41,8 @@ class Controller(private val context: Context) : DroidApi {
     override fun deleteDroidByUUID(@PathVariable uuid: String) = forDroid().handle { bindDelete(uuid) }
 
 
-    private fun <T, R> Producible<T, R>.handle(block: suspend Context.() -> Either<AppException, T>) =
-        runBlocking { context.block().getOrHandle { throw it }.produce() }
+    private fun <T, R> Producible<T, R>.handle(block: suspend Context.() -> Effect<AppException, T>) =
+        runBlocking { context.block().toEither().map { it.produce() } }
+            .getOrHandle { throw it }
 
 }
