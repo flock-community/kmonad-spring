@@ -18,11 +18,9 @@
     <description>Demo project for Functional Spring Boot</description>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <java.version>11</java.version>
-        <kotlin.version>1.6.10</kotlin.version>
-        <kmongo.version>4.4.0</kmongo.version>
+        <java.version>17</java.version>
+        <kotlin.version>1.6.21</kotlin.version>
+        <kmongo.version>4.5.1</kmongo.version>
     </properties>
 
    <modules>

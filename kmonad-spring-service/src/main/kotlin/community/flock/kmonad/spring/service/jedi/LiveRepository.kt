@@ -6,7 +6,7 @@ import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.InternalServerError
-import community.flock.kmonad.core.common.IO
+import community.flock.kmonad.core.common.monads.IO
 import community.flock.kmonad.core.jedi.model.Jedi
 import community.flock.kmonad.core.jedi.Repository
 import community.flock.kmonad.spring.service.common.DB.StarWars

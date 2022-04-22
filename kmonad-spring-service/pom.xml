@@ -13,6 +13,10 @@
     <name>kmonad-spring-service</name>
     <description>Implementation of KMonad spring api</description>
 
+    <properties>
+        <arrow.version>1.0.1</arrow.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>community.flock</groupId>
@@ -23,6 +27,16 @@
             <groupId>community.flock</groupId>
             <artifactId>kmonad-core</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-core</artifactId>
+            <version>${arrow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-core-jvm</artifactId>
+            <version>${arrow.version}</version>
         </dependency>
 
         <dependency>
@@ -95,6 +109,8 @@
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
+                        <arg>-Xcontext-receivers</arg>
+                        <arg>-Xskip-prerelease-check</arg>
                     </args>
                     <compilerPlugins>
                         <plugin>spring</plugin>

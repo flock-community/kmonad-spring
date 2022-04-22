@@ -3,14 +3,15 @@ package community.flock.kmonad.spring.service.droids
 import arrow.core.Either
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.common.Producible
 import community.flock.kmonad.core.droids.Context
 import community.flock.kmonad.core.droids.bindDelete
 import community.flock.kmonad.core.droids.bindGet
 import community.flock.kmonad.core.droids.bindPost
 import community.flock.kmonad.spring.api.DroidApi
+import community.flock.kmonad.spring.service.droids.data.Producer.forDroid
+import community.flock.kmonad.spring.service.droids.data.Producer.forDroidFlow
 import community.flock.kmonad.spring.service.droids.data.consume
-import community.flock.kmonad.spring.service.droids.data.produce
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Indexed
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -28,19 +29,19 @@ import community.flock.kmonad.spring.api.data.Droid as PotentialDroid
 class Controller(private val context: Context) : DroidApi {
 
     @GetMapping
-    override fun getDroids() = handle { bindGet().map { it.toList() } }.produce()
+    override fun getDroids() = forDroidFlow().handle { bindGet() }
 
     @GetMapping("{uuid}")
-    override fun getDroidByUUID(@PathVariable uuid: String) = handle { bindGet(uuid) }.produce()
+    override fun getDroidByUUID(@PathVariable uuid: String) = forDroid().handle { bindGet(uuid) }
 
     @PostMapping
-    override fun postDroid(@RequestBody droid: PotentialDroid) = handle { bindPost(droid.consume()) }.produce()
+    override fun postDroid(@RequestBody droid: PotentialDroid) = forDroid().handle { bindPost(droid.consume()) }
 
     @DeleteMapping("{uuid}")
-    override fun deleteDroidByUUID(@PathVariable uuid: String) = handle { bindDelete(uuid) }.produce()
+    override fun deleteDroidByUUID(@PathVariable uuid: String) = forDroid().handle { bindDelete(uuid) }
 
 
-    private fun <A> handle(block: suspend Context.() -> Either<AppException, A>) =
-        runBlocking { context.block().getOrHandle { throw it } }
+    private fun <T, R> Producible<T, R>.handle(block: suspend Context.() -> Either<AppException, T>) =
+        runBlocking { context.block().getOrHandle { throw it }.produce() }
 
 }
