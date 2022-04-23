@@ -3,7 +3,7 @@ package community.flock.kmonad.spring.service.droids
 import arrow.core.continuations.Effect
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
-import community.flock.kmonad.core.common.Producible
+import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.droids.Context
 import community.flock.kmonad.core.droids.bindDelete
 import community.flock.kmonad.core.droids.bindGet

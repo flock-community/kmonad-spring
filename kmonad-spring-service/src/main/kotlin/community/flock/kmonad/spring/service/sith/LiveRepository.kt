@@ -5,7 +5,7 @@ import com.mongodb.MongoException
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.common.HasLogger
 import community.flock.kmonad.core.sith.model.Sith
 import community.flock.kmonad.core.sith.Repository
 import community.flock.kmonad.spring.service.common.DB.StarWars

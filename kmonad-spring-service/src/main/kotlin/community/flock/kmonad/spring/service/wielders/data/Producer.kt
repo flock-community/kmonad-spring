@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.wielders.data
 
-import community.flock.kmonad.core.common.Producible
+import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.wielders.model.ForceWielder
 import community.flock.kmonad.core.wielders.model.ForceWielder.Type.DARK
 import community.flock.kmonad.core.wielders.model.ForceWielder.Type.LIGHT

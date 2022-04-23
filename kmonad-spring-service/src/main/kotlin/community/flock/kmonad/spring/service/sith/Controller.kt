@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.sith
 
-import community.flock.kmonad.core.common.Producible
+import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.sith.Context
 import community.flock.kmonad.core.sith.bindDelete
 import community.flock.kmonad.core.sith.bindGet

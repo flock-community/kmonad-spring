@@ -1,7 +1,7 @@
 package community.flock.kmonad.spring.service.common
 
 import com.mongodb.ConnectionString
-import community.flock.kmonad.core.common.define.Logger
+import community.flock.kmonad.core.common.Logger
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo

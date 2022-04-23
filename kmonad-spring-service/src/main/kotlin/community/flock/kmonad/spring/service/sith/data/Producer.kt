@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.sith.data
 
-import community.flock.kmonad.core.common.Producible
+import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.sith.model.Sith
 import community.flock.kmonad.spring.api.data.ImmutableSith
 import kotlinx.coroutines.flow.Flow

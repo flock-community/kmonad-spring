@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.droids.data
 
-import community.flock.kmonad.core.common.Producible
+import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.droids.model.Droid
 import community.flock.kmonad.core.droids.model.Droid.Type.Astromech
 import community.flock.kmonad.core.droids.model.Droid.Type.Protocol

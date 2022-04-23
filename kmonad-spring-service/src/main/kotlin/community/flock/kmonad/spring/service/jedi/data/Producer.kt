@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.jedi.data
 
-import community.flock.kmonad.core.common.Producible
+import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.jedi.model.Jedi
 import community.flock.kmonad.spring.api.data.ImmutableJedi
 import kotlinx.coroutines.flow.Flow

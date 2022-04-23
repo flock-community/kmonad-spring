@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.wielders
 
-import community.flock.kmonad.core.common.Producible
+import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.wielders.Context
 import community.flock.kmonad.core.wielders.bindGet
 import community.flock.kmonad.spring.api.ForceWielderApi
