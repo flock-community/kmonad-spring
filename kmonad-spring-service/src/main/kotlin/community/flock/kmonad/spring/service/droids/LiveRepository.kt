@@ -1,5 +1,6 @@
 package community.flock.kmonad.spring.service.droids
 
+import arrow.core.continuations.EffectScope
 import arrow.core.continuations.effect
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.Conflict
@@ -7,11 +8,12 @@ import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.droids.Repository
 import community.flock.kmonad.core.droids.model.Droid
-import community.flock.kmonad.spring.service.HasAppException
 import community.flock.kmonad.spring.service.common.DB
 import community.flock.kmonad.spring.service.common.HasLive
 import org.litote.kmongo.eq
 import java.util.UUID
+
+typealias HasAppException = EffectScope<AppException>
 
 interface LiveContext : HasLive.DatabaseClient
 

@@ -1,11 +1,11 @@
 package community.flock.kmonad.spring.service.jedi
 
-import arrow.core.Either
-import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.common.monads.Either
 import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.common.monads.IO
 import community.flock.kmonad.core.common.monads.Reader
+import community.flock.kmonad.core.common.monads.getOrHandle
 import community.flock.kmonad.core.jedi.Context
 import community.flock.kmonad.core.jedi.bindDelete
 import community.flock.kmonad.core.jedi.bindGet

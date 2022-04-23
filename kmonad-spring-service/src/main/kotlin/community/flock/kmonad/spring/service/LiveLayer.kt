@@ -1,7 +1,8 @@
-package community.flock.kmonad.spring.service.common
+package community.flock.kmonad.spring.service
 
 import com.mongodb.ConnectionString
 import community.flock.kmonad.core.common.Logger
+import community.flock.kmonad.spring.service.common.LiveLogger
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.springframework.context.annotation.Configuration

@@ -1,6 +1,5 @@
 package community.flock.kmonad.spring.service
 
-import arrow.core.continuations.EffectScope
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.AppException.Conflict
@@ -31,5 +30,3 @@ class ExceptionHandler {
         .also { LiveLogger.error(e.stackTraceToString()) }
 
 }
-
-typealias HasAppException = EffectScope<AppException>
