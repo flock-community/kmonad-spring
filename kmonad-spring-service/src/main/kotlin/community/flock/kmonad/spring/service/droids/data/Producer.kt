@@ -1,9 +1,9 @@
 package community.flock.kmonad.spring.service.droids.data
 
 import community.flock.kmonad.core.common.typeclasses.Producible
-import community.flock.kmonad.core.droids.model.Droid
-import community.flock.kmonad.core.droids.model.Droid.Type.Astromech
-import community.flock.kmonad.core.droids.model.Droid.Type.Protocol
+import community.flock.kmonad.core.droid.model.Droid
+import community.flock.kmonad.core.droid.model.Droid.Type.Astromech
+import community.flock.kmonad.core.droid.model.Droid.Type.Protocol
 import community.flock.kmonad.spring.api.data.ImmutableDroid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

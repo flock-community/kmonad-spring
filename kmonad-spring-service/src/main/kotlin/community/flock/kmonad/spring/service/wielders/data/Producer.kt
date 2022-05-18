@@ -1,13 +1,10 @@
 package community.flock.kmonad.spring.service.wielders.data
 
 import community.flock.kmonad.core.common.typeclasses.Producible
-import community.flock.kmonad.core.wielders.model.ForceWielder
-import community.flock.kmonad.core.wielders.model.ForceWielder.Type.DARK
-import community.flock.kmonad.core.wielders.model.ForceWielder.Type.LIGHT
+import community.flock.kmonad.core.forcewielder.model.ForceWielder
+import community.flock.kmonad.core.forcewielder.model.ForceWielder.Type.DARK
+import community.flock.kmonad.core.forcewielder.model.ForceWielder.Type.LIGHT
 import community.flock.kmonad.spring.api.data.ImmutableForceWielder
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 import community.flock.kmonad.spring.api.data.ForceWielder as ProducedForceWielder
 
 
@@ -17,8 +14,8 @@ object Producer {
         override suspend fun ForceWielder.produce() = toProducedForceWielder()
     }
 
-    fun forWielderFlow() = object : Producible<Flow<ForceWielder>, List<ProducedForceWielder>> {
-        override suspend fun Flow<ForceWielder>.produce() = map { it.toProducedForceWielder() }.toList()
+    fun forWielders() = object : Producible<List<ForceWielder>, List<ProducedForceWielder>> {
+        override suspend fun List<ForceWielder>.produce() = map { it.toProducedForceWielder() }
     }
 
 }

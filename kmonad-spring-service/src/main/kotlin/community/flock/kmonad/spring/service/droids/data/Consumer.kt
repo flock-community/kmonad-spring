@@ -1,6 +1,6 @@
 package community.flock.kmonad.spring.service.droids.data
 
-import community.flock.kmonad.core.droids.model.Droid
+import community.flock.kmonad.core.droid.model.Droid
 import community.flock.kmonad.spring.api.data.Droid.Type.ASTROMECH
 import community.flock.kmonad.spring.api.data.Droid.Type.PROTOCOL
 import community.flock.kmonad.spring.api.data.Droid as PotentialDroid

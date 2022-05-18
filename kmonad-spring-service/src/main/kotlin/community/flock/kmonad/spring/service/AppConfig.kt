@@ -3,10 +3,10 @@ package community.flock.kmonad.spring.service
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import community.flock.kmonad.core.droids.Context as DroidContext
-import community.flock.kmonad.core.jedi.Context as JediContext
-import community.flock.kmonad.core.sith.Context as SithContext
-import community.flock.kmonad.core.wielders.Context as WielderContext
+import community.flock.kmonad.core.droid.DroidContext
+import community.flock.kmonad.core.jedi.JediContext
+import community.flock.kmonad.core.sith.SithContext
+import community.flock.kmonad.core.forcewielder.ForceWielderContext
 import community.flock.kmonad.spring.service.droids.Controller as DroidController
 import community.flock.kmonad.spring.service.droids.LiveRepository as LiveDroidRepository
 import community.flock.kmonad.spring.service.jedi.Controller as JediController
@@ -32,7 +32,7 @@ class AppConfig(private val liveLayer: LiveLayer) {
 
     @Bean
     @ExperimentalCoroutinesApi
-    fun wielderController() = WielderController(object : WielderContext {
+    fun wielderController() = WielderController(object : ForceWielderContext {
         override val jediRepository = LiveJediRepository(liveLayer)
         override val sithRepository = LiveSithRepository(liveLayer)
         override val logger = liveLayer.logger

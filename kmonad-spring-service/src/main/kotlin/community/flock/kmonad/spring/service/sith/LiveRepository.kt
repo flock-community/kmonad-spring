@@ -6,8 +6,8 @@ import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.common.HasLogger
+import community.flock.kmonad.core.sith.SithRepository
 import community.flock.kmonad.core.sith.model.Sith
-import community.flock.kmonad.core.sith.Repository
 import community.flock.kmonad.spring.service.common.DB.StarWars
 import community.flock.kmonad.spring.service.common.HasLive
 import org.litote.kmongo.eq
@@ -15,26 +15,30 @@ import java.util.UUID
 
 interface LiveContext : HasLive.DatabaseClient, HasLogger
 
-class LiveRepository(ctx: LiveContext) : Repository {
+class LiveRepository(ctx: LiveContext) : SithRepository {
 
     private val collection = ctx.databaseClient.getDatabase(StarWars.name).getCollection<Sith>()
+    private val logger = ctx.logger
 
-    override suspend fun getAll() = guard { collection.find().toFlow() }
-
-    override suspend fun getByUUID(uuid: UUID): Sith = guard { collection.findOne(Sith::id eq uuid.toString()) }
-        ?: throw NotFound(uuid)
-
-    override suspend fun save(sith: Sith): Sith {
-        val uuid = UUID.fromString(sith.id)
-        val exception = runCatching { getByUUID(uuid) }.exceptionOrNull() ?: throw Conflict(uuid)
-        val result = if (exception is NotFound) guard { collection.insertOne(sith) } else throw exception
-        return if (result.wasAcknowledged()) sith else throw InternalServerError()
+    override suspend fun getAll() = runCatching {
+        guard { collection.find().toList() }
     }
 
-    override suspend fun deleteByUUID(uuid: UUID): Sith {
-        val sith = getByUUID(uuid)
+    override suspend fun getByUUID(uuid: UUID) = runCatching {
+        guard { collection.findOne(Sith::id eq uuid.toString()) } ?: throw NotFound(uuid)
+    }
+
+    override suspend fun save(sith: Sith) = runCatching {
+        val uuid = UUID.fromString(sith.id)
+        val exception = getByUUID(uuid).also { logger.log(it.toString()) }.exceptionOrNull() ?: throw Conflict(uuid)
+        val result = if (exception is NotFound) guard { collection.insertOne(sith) } else throw exception
+        if (result.wasAcknowledged()) sith else throw InternalServerError()
+    }
+
+    override suspend fun deleteByUUID(uuid: UUID) = runCatching {
+        val sith = getByUUID(uuid).getOrThrow()
         val result = guard { collection.deleteOne(Sith::id eq uuid.toString()) }
-        return if (result.wasAcknowledged()) sith else throw InternalServerError()
+        if (result.wasAcknowledged()) sith else throw InternalServerError()
     }
 
 }

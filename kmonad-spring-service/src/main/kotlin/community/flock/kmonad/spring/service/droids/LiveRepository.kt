@@ -6,8 +6,8 @@ import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.droids.Repository
-import community.flock.kmonad.core.droids.model.Droid
+import community.flock.kmonad.core.droid.DroidRepository
+import community.flock.kmonad.core.droid.model.Droid
 import community.flock.kmonad.spring.service.common.DB
 import community.flock.kmonad.spring.service.common.HasLive
 import org.litote.kmongo.eq
@@ -17,22 +17,22 @@ typealias HasAppException = EffectScope<AppException>
 
 interface LiveContext : HasLive.DatabaseClient
 
-class LiveRepository(ctx: LiveContext) : Repository {
+class LiveRepository(ctx: LiveContext) : DroidRepository {
 
     private val collection = ctx.databaseClient.getDatabase(DB.StarWars.name).getCollection<Droid>()
 
 
     context(HasAppException)
-    override suspend fun getAll() = guard { collection.find().toFlow() }
+            override suspend fun getAll() = guard { collection.find().toFlow() }
 
     context(HasAppException)
-    override suspend fun getByUUID(uuid: UUID): Droid {
+            override suspend fun getByUUID(uuid: UUID): Droid {
         val maybeDroid = guard { collection.findOne(Droid::id eq uuid.toString()) }
         return maybeDroid ?: shift(NotFound(uuid))
     }
 
     context(HasAppException)
-    override suspend fun save(droid: Droid): Droid {
+            override suspend fun save(droid: Droid): Droid {
         val uuid = UUID.fromString(droid.id)
         val result = effect<AppException, Droid> {
             getByUUID(uuid)
@@ -45,7 +45,7 @@ class LiveRepository(ctx: LiveContext) : Repository {
     }
 
     context(HasAppException)
-    override suspend fun deleteByUUID(uuid: UUID): Droid {
+            override suspend fun deleteByUUID(uuid: UUID): Droid {
         val droid = getByUUID(uuid)
         val result = guard { collection.deleteOne(Droid::id eq uuid.toString()) }
         val maybeDroid = droid.takeIf { result.wasAcknowledged() }
@@ -55,10 +55,10 @@ class LiveRepository(ctx: LiveContext) : Repository {
 }
 
 context(HasAppException)
-private suspend inline fun <A> guard(block: () -> A) = guardWith(AppException::InternalServerError, block)
+        private suspend inline fun <A> guard(block: () -> A) = guardWith(AppException::InternalServerError, block)
 
 context(HasAppException)
-private suspend inline fun <E : AppException, A> guardWith(errorBlock: (ex: Exception) -> E, block: () -> A) =
+        private suspend inline fun <E : AppException, A> guardWith(errorBlock: (ex: Exception) -> E, block: () -> A) =
     try {
         block()
     } catch (ex: Exception) {
