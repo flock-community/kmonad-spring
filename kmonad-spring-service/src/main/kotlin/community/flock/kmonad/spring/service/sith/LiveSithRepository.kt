@@ -5,20 +5,18 @@ import com.mongodb.MongoException
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.common.HasLogger
+import community.flock.kmonad.core.common.Logger
 import community.flock.kmonad.core.sith.SithRepository
 import community.flock.kmonad.core.sith.model.Sith
 import community.flock.kmonad.spring.service.common.DB.StarWars
-import community.flock.kmonad.spring.service.common.HasLive
-import org.litote.kmongo.eq
 import java.util.UUID
+import org.litote.kmongo.coroutine.CoroutineClient
+import org.litote.kmongo.eq
 
-interface LiveContext : HasLive.DatabaseClient, HasLogger
 
-class LiveRepository(ctx: LiveContext) : SithRepository {
+class LiveSithRepository(client: CoroutineClient, private val logger: Logger) : SithRepository {
 
-    private val collection = ctx.databaseClient.getDatabase(StarWars.name).getCollection<Sith>()
-    private val logger = ctx.logger
+    private val collection = client.getDatabase(StarWars.name).getCollection<Sith>()
 
     override suspend fun getAll() = runCatching {
         guard { collection.find().toList() }

@@ -1,10 +1,11 @@
 package community.flock.kmonad.spring.service.droids
 
-import arrow.core.continuations.Effect
+import arrow.core.Either
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.common.typeclasses.Producible
 import community.flock.kmonad.core.droid.DroidContext
+import community.flock.kmonad.core.droid.DroidDependencies
 import community.flock.kmonad.core.droid.bindDelete
 import community.flock.kmonad.core.droid.bindGet
 import community.flock.kmonad.core.droid.bindPost
@@ -13,20 +14,23 @@ import community.flock.kmonad.spring.service.droids.data.Producer.forDroid
 import community.flock.kmonad.spring.service.droids.data.Producer.forDroidFlow
 import community.flock.kmonad.spring.service.droids.data.consume
 import kotlinx.coroutines.runBlocking
-import org.springframework.stereotype.Indexed
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.RestController
 import community.flock.kmonad.spring.api.data.Droid as PotentialDroid
 
-@Indexed
-@ResponseBody
+@RestController
 @RequestMapping("/droids")
-class Controller(private val context: DroidContext) : DroidApi {
+class DroidController<R : DroidDependencies>(appLayer: R) : DroidApi {
+
+    private val context = object : DroidContext {
+        override val droidRepository = appLayer.droidRepository
+        override val logger = appLayer.logger
+    }
 
     @GetMapping
     override fun getDroids() = forDroidFlow().handle { bindGet() }
@@ -41,8 +45,8 @@ class Controller(private val context: DroidContext) : DroidApi {
     override fun deleteDroidByUUID(@PathVariable uuid: String) = forDroid().handle { bindDelete(uuid) }
 
 
-    private fun <T, R> Producible<T, R>.handle(block: suspend DroidContext.() -> Effect<AppException, T>) =
-        runBlocking { context.block().toEither().map { it.produce() } }
+    private fun <T, R> Producible<T, R>.handle(block: suspend DroidContext.() -> Either<AppException, T>) =
+        runBlocking { context.block().map { it.produce() } }
             .getOrHandle { throw it }
 
 }

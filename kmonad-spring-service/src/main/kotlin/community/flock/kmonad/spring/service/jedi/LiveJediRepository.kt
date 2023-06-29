@@ -13,16 +13,14 @@ import community.flock.kmonad.core.common.monads.toOption
 import community.flock.kmonad.core.jedi.JediRepository
 import community.flock.kmonad.core.jedi.model.Jedi
 import community.flock.kmonad.spring.service.common.DB.StarWars
-import community.flock.kmonad.spring.service.common.HasLive
-import kotlinx.coroutines.runBlocking
-import org.litote.kmongo.eq
 import java.util.UUID
+import kotlinx.coroutines.runBlocking
+import org.litote.kmongo.coroutine.CoroutineClient
+import org.litote.kmongo.eq
 
-interface LiveContext : HasLive.DatabaseClient
+class LiveJediRepository(client: CoroutineClient) : JediRepository {
 
-class LiveRepository(ctx: LiveContext) : JediRepository {
-
-    private val collection = ctx.databaseClient.getDatabase(StarWars.name).getCollection<Jedi>()
+    private val collection = client.getDatabase(StarWars.name).getCollection<Jedi>()
 
 
     override fun getAll(): IO<Either<InternalServerError, List<Jedi>>> = IO { getAllAsEither() }

@@ -9,18 +9,15 @@ import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.droid.DroidRepository
 import community.flock.kmonad.core.droid.model.Droid
 import community.flock.kmonad.spring.service.common.DB
-import community.flock.kmonad.spring.service.common.HasLive
 import org.litote.kmongo.eq
 import java.util.UUID
+import org.litote.kmongo.coroutine.CoroutineClient
 
 typealias HasAppException = EffectScope<AppException>
 
-interface LiveContext : HasLive.DatabaseClient
+class LiveDroidRepository(client: CoroutineClient) : DroidRepository {
 
-class LiveRepository(ctx: LiveContext) : DroidRepository {
-
-    private val collection = ctx.databaseClient.getDatabase(DB.StarWars.name).getCollection<Droid>()
-
+    private val collection = client.getDatabase(DB.StarWars.name).getCollection<Droid>()
 
     context(HasAppException)
             override suspend fun getAll() = guard { collection.find().toFlow() }
